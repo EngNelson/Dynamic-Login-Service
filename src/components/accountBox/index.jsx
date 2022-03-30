@@ -91,6 +91,9 @@ export function AccountBox(prop) {
   const [isExpanded, setExpanded] = useState(false);
   const playExpandingAnimation = () => {
     setExpanded(true);
+    setTimeout(() => {
+      setExpanded(false);
+    }, 3000);
   };
 
   return (
@@ -109,6 +112,7 @@ export function AccountBox(prop) {
       </TopContainer>
       <InnerContainer>
         <LoginForm />
+        <p onClick={playExpandingAnimation}>clickme</p>
       </InnerContainer>
     </BoxContainer>
   );
