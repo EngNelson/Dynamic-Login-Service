@@ -95,6 +95,7 @@ const expandingTransition = {
 
 export function AccountBox(prop) {
   const [isExpanded, setExpanded] = useState(false);
+  const [active, setActive] = useState("signin");
   const playExpandingAnimation = () => {
     setExpanded(true);
     setTimeout(() => {
@@ -102,24 +103,41 @@ export function AccountBox(prop) {
     }, expandingTransition.duration * 1000 - 1500);
   };
 
-  return (
-    <BoxContainer>
-      <TopContainer>
-        <BackDrop
-          initial={false}
-          animate={isExpanded ? "expanded" : "collapsed"}
-          variants={backdropVariants}
-        />
-        <HeaderContainer>
-          <HeaderText>Welcome</HeaderText>
-          <HeaderText>Back</HeaderText>
-          <SmallText>Please sign-in to continue!</SmallText>
-        </HeaderContainer>
-      </TopContainer>
-      <InnerContainer>
-        <LoginForm />
-        <p onClick={playExpandingAnimation}>clickme</p>
-      </InnerContainer>
-    </BoxContainer>
-  );
+  const switchToSignup = () => {
+    playExpandingAnimation();
+    setTimeout(() => {
+      setActive("signup");
+    }, 400);
+
+    const switchToSignin = () => {
+      playExpandingAnimation();
+      setTimeout(() => {
+        setActive("signin");
+      }, 400);
+    };
+
+    const contextValue = { switchToSignup, switchToSignin };
+
+    return (
+      <BoxContainer>
+        <TopContainer>
+          <BackDrop
+            initial={false}
+            animate={isExpanded ? "expanded" : "collapsed"}
+            variants={backdropVariants}
+            transition={expandingTransition}
+          />
+          <HeaderContainer>
+            <HeaderText>Welcome</HeaderText>
+            <HeaderText>Back</HeaderText>
+            <SmallText>Please sign-in to continue!</SmallText>
+          </HeaderContainer>
+        </TopContainer>
+        <InnerContainer>
+          <LoginForm />
+          <p onClick={playExpandingAnimation}>clickme</p>
+        </InnerContainer>
+      </BoxContainer>
+    );
+  };
 }
