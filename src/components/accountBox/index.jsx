@@ -87,13 +87,19 @@ const backdropVariants = {
   },
 };
 
+const expandingTransition = {
+  type: "spring",
+  duration: 2.3,
+  stiffness: 30,
+};
+
 export function AccountBox(prop) {
   const [isExpanded, setExpanded] = useState(false);
   const playExpandingAnimation = () => {
     setExpanded(true);
     setTimeout(() => {
       setExpanded(false);
-    }, 3000);
+    }, expandingTransition.duration * 1000 - 1500);
   };
 
   return (
